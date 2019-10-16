@@ -3,6 +3,7 @@ import { AccountService } from '../services/account.service';
 import { UserEntity } from '../entities/user.entity';
 import { AccountModule } from '../models/account/account.module';
 import { AuthGuard } from '@nestjs/passport';
+import { AuthService } from '../auth/auth.service'
 
 
 
@@ -10,6 +11,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class AccountController {
   constructor(
     private readonly accountService: AccountService,
+    private readonly authService: AuthService,
     ) { }
 
     
@@ -27,6 +29,6 @@ export class AccountController {
   @UseGuards(AuthGuard('jwt'))
   @Post('login')
   async login(@Request() req) {
-    return req.user;
+    return this.authService.login(req.user);
   }
 }
