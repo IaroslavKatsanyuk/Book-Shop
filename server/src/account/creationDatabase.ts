@@ -1,4 +1,4 @@
-import { Users } from "../entities/user.entity";
+import { UserEntity } from "../entities/user.entity";
 import { Injectable } from "@nestjs/common";
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 
@@ -14,7 +14,7 @@ export class Database {
             username: 'BookShopUser',
             password: 'Ukraine1990',
             database: 'my-db',
-            entities: [Users],
+            entities: [UserEntity],
             synchronize: true,
         };
     }

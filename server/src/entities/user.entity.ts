@@ -2,25 +2,25 @@ import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 
-@Entity()
-export class Users {
-  @PrimaryGeneratedColumn()
-  Id: number;
+@Entity('users')
+export class UserEntity  {
+  @PrimaryGeneratedColumn('uuid')
+  Id: string;
 
-  @Column('text')
+  @Column({ type: 'varchar'})
   FirstName: string;
 
-  @Column('text')
+  @Column({ type: 'varchar'})
   LastName: string;
 
-  @Column('text')
+  @Column({ type: 'varchar'})
   Email: string;
 
-  @Column('text')
-  PasswordHash: string;
+  @Column({ type: 'varchar'})
+  Password: string;
 
   @BeforeInsert()
   async hashPassword(){
-    this.PasswordHash = await bcrypt.hash(this.PasswordHash, 10)
+    this.Password = await bcrypt.hash(this.Password, 10)
   }
 }
