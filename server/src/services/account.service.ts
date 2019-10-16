@@ -35,7 +35,7 @@ export class AccountService {
   findAll(): Promise<UserEntity[]> {
     return undefined;
   }
-  async findOne(FirstName: string, LastName: string): Promise<UserEntity | undefined> {
+  async findOne(FirstName: string, LastName: string): Promise<User | undefined> {
     return this.users.find(user => user.FirstName === FirstName && user.LastName === LastName);
   }
 }

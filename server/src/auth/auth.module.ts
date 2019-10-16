@@ -4,7 +4,6 @@ import { AccountModule } from '../models/account/account.module';
 
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
-import { jwtConstants } from '../secrets/jwt.constants';
 import { JwtModule } from '@nestjs/jwt';
 
 @Module({

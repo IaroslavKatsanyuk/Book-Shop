@@ -14,11 +14,7 @@ const env = new Database();
 @Module({
   imports: [
     TypeOrmModule.forRoot(env.typeormModuleOptions),
-    PassportModule.register({
-      defaultStrategy: 'jwt',
-      property: 'user',
-      session: false
-    }),
+    PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '7d' }
