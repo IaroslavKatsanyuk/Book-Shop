@@ -10,9 +10,9 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) { }
 
-  async validateUser(FirstName: string, LastName: string, pass: string): Promise<any> {
-    const user = await this.accountService.findOne(FirstName, LastName);
-    if (user && (await this.passwordsAreEqual(user.Password, pass))) {
+  async validateUser(Email: string, pass: string): Promise<any> {
+    const user = await this.accountService.findOne(Email);
+    if (user && user.Password, pass) {
       const { Password, ...result } = user;
       return result;
     }
@@ -20,16 +20,9 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { FirstName: user.FirstName, LastName: user.LastName, Sub: user.Id };
+    const payload = {  Email: user.Email, Password: user.Password };
     return {
       access_token: this.jwtService.sign(payload)
     };
-  }
-
-  private async passwordsAreEqual(
-    hashedPassword: string,
-    plainPassword: string
-  ): Promise<boolean> {
-    return await bcrypt.compare(plainPassword, hashedPassword);
   }
 }

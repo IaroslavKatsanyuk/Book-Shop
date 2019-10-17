@@ -16,11 +16,11 @@ export class UserEntity  {
   @Column({ type: 'varchar'})
   Email: string;
 
-  @Column({ type: 'varchar'})
-  Password: string;
-
   @BeforeInsert()
   async hashPassword(){
     this.Password = await bcrypt.hash(this.Password, 10)
   }
+
+  @Column({ type: 'varchar'})
+  Password: string;
 }

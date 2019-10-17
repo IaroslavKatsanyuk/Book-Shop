@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Request} from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Request } from '@nestjs/common';
 import { AccountService } from '../services/account.service';
 import { UserEntity } from '../entities/user.entity';
 import { AccountModule } from '../models/account/account.module';
@@ -12,12 +12,12 @@ export class AccountController {
   constructor(
     private readonly accountService: AccountService,
     private readonly authService: AuthService,
-    ) { }
+  ) { }
 
-    
+  @UseGuards(AuthGuard('jwt'))
   @Get('findAll')
   findAll(): Promise<UserEntity[]> {
-    return this.accountService.findAll();    
+    return this.accountService.findAll();
   }
 
   @Post('register')
@@ -26,9 +26,8 @@ export class AccountController {
   }
 
 
-  @UseGuards(AuthGuard('jwt'))
   @Post('login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  async login(@Body() user: any) {
+    return this.authService.login(user);
   }
 }
