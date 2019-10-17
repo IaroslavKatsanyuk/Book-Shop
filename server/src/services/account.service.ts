@@ -12,7 +12,7 @@ export class AccountService {
         Id: '1',
         FirstName: 'john',
         LastName: 'Smit',
-        Email: 'smitJohn@gmail.com',
+        Email: 'smitJohn1@gmail.com',
         Password: 'changeme',
       },
       {
