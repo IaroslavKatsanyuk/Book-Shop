@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AccountModule } from '../models/account/account.module';
+import { AccountModule } from '../modules/account/account.module';
 
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';

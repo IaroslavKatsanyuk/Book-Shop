@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, UseGuards, Request } from '@nestjs/common';
 import { AccountService } from '../services/account.service';
 import { UserEntity } from '../entities/user.entity';
-import { AccountModule } from '../models/account/account.module';
+import { AccountModule } from '../modules/account/account.module';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../auth/auth.service'
 
@@ -21,8 +21,8 @@ export class AccountController {
   }
 
   @Post('register')
-  async register(@Body() accountModule: AccountModule): Promise<string> {
-    return "register success";
+  async register(@Body() user: any){
+    return this.authService.register(user);
   }
 
 

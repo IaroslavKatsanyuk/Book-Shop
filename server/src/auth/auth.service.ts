@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AccountService } from '../services/account.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { RegisterModel } from 'src/models/account/register.model';
 
 @Injectable()
 export class AuthService {
@@ -10,26 +11,43 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) { }
 
-  async validateUser(Email: string, pass: string): Promise<any> {
-    const user = await this.accountService.findOne(Email);
-    if (user && (await this.passwordsAreEqual(user.Password, pass))) {
-      const { Password, ...result } = user;
-      return result;
+  async register(user: any): Promise<any> {
+    const userFromDB = await this.validateUser(user);
+    if (!userFromDB) {
+     const reg = await this.accountService.createConnection(RegisterModel);
+    }
+    return null;
+  }
+
+  async validateUser(LoginModel: any): Promise<any> {
+    const user = await this.accountService.findOne(LoginModel.email);
+    const paswordIsCorrect: boolean = await this.passwordsAreEqual(user.password, LoginModel.password)
+    if (user && paswordIsCorrect) {
+      return user;
     }
     return null;
   }
 
   async login(user: any) {
-    const payload = {  Email: user.Email, Password: user.Password };
-     return {
-      access_token: this.jwtService.sign(payload)
+    const userFromDB =  await this.validateUser(user);
+    if(!userFromDB){
+      return null;
+    }
+    const payload = { email: userFromDB.email, id: userFromDB.id };
+    return {
+      access_tokne: this.jwtService.sign(payload)
     };
   }
 
-  private async passwordsAreEqual(
+  async passwordsAreEqual(
     hashedPassword: string,
     plainPassword: string
   ): Promise<boolean> {
-    return await bcrypt.compare(plainPassword, hashedPassword);
+    return await new Promise((resolve, reject) => bcrypt.compare(plainPassword, hashedPassword,(error, result) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(result);
+    }));
   }
 }

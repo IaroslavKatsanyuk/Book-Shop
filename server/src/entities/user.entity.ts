@@ -5,22 +5,22 @@ import * as bcrypt from 'bcrypt';
 @Entity('users')
 export class UserEntity  {
   @PrimaryGeneratedColumn('uuid')
-  Id: string;
+  id: string;
 
   @Column({ type: 'varchar'})
-  FirstName: string;
+  firstName: string;
 
   @Column({ type: 'varchar'})
-  LastName: string;
+  lastName: string;
 
   @Column({ type: 'varchar'})
-  Email: string;
+  email: string;
 
   @BeforeInsert()
   async hashPassword(){
-    this.Password = await bcrypt.hash(this.Password, 10)
+    this.password = await bcrypt.hash(this.password, 10)
   }
 
   @Column({ type: 'varchar'})
-  Password: string;
+  password: string;
 }
