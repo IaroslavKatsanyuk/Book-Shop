@@ -1,41 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { UserEntity } from '../entities/user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, createConnection } from 'typeorm';
+import { Repository, InsertResult } from 'typeorm';
 import { RegisterModel } from 'src/models/account/register.model';
+import { AuthService } from 'src/auth/auth.service';
 
-createConnection().then(connection => {
 
-  let users = new UserEntity()
-  users.id
-  users.firstName = RegisterModel.firstName;
-  users.lastName = RegisterModel.lastName;
-  users.email = RegisterModel.email;
-  users.password = RegisterModel.password;
-
-  return connection.manager
-          .save(users)
-
-}).catch(error => console.log(error));
 
 @Injectable()
 export class AccountService {
-  [x: string]: any;
   private readonly users: any[];
   constructor(
-    @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
-  ) {}
+    @Inject(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,    
+    private readonly accountService: AccountService,
+    private readonly authService: AuthService,
+  ) { }
 
-    
+  async register(user: RegisterModel): Promise<any> {
+    const validateUser = await this.authService.validateUser(RegisterModel);
+    const userToRegister: UserEntity = new UserEntity();
+    userToRegister.email = user.email;
+    if (!validateUser) {
+      const reg = await this.accountService.create(userToRegister);
+    }
+    return null;
+  }
 
-  findAll(): Promise<UserEntity[]> {
-    return this.userRepository.find();
+  async findAll(): Promise<UserEntity[]> {
+    return await this.userRepository.find();
+  }
+
+  async create(userToInsert: UserEntity): Promise<InsertResult> {
+    return await this.userRepository.insert(userToInsert);
   }
 
   async findOne(email: string): Promise<any> {
     return this.users.find(user => user.email === email);
   }
-  
+
 }
 

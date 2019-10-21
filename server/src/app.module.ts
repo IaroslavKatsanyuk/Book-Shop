@@ -8,12 +8,12 @@ import { AccountModule } from './modules/account/account.module';
 
 const env = new Database();
 
-@Module({
-    
+@Module({    
     imports: [
+      AccountService,
       AuthModule, 
       AccountModule,
-      TypeOrmModule.forRoot(env.typeormModuleOptions),],
+      TypeOrmModule.forRoot(env.typeormModuleOptions)],
     controllers: [AccountController],
     providers: [AccountService],
 })
