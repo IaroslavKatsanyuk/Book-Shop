@@ -4,16 +4,16 @@ import * as bcrypt from 'bcrypt';
 
 @Entity('users')
 export class UserEntity  {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar'})
+  @Column()
   firstName: string;
 
-  @Column({ type: 'varchar'})
+  @Column()
   lastName: string;
 
-  @Column({ type: 'varchar'})
+  @Column()
   email: string;
 
   @BeforeInsert()
@@ -21,6 +21,6 @@ export class UserEntity  {
     this.password = await bcrypt.hash(this.password, 10)
   }
 
-  @Column({ type: 'varchar'})
+  @Column()
   password: string;
 }

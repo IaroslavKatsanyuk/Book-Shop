@@ -1,13 +1,10 @@
 import { UserEntity } from "../entities/user.entity";
-import { Injectable } from "@nestjs/common";
-import { TypeOrmModuleOptions } from "@nestjs/typeorm";
+import { createConnection } from "typeorm";
 
-@Injectable()
-export class Database {
-    typeormModuleOptions: TypeOrmModuleOptions;
-
-    constructor() {
-        this.typeormModuleOptions = {
+export const databaseProviders = [
+    {
+        provide: 'DATABASE_CONNECTION',
+        useFactory: async () => await createConnection({
             type: 'mysql',
             host: 'localhost',
             port: 3306,
@@ -16,6 +13,5 @@ export class Database {
             database: 'my-db',
             entities: [UserEntity],
             synchronize: true,
-        };
-    }
-}
+        }),
+    }]
