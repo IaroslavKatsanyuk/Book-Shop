@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 
 
 @Entity('users')
-export class UserEntity  {
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -17,7 +17,7 @@ export class UserEntity  {
   email: string;
 
   @BeforeInsert()
-  async hashPassword(){
+  async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10)
   }
 

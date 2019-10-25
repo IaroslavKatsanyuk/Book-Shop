@@ -8,11 +8,10 @@ import { AuthorModule } from './modules/author/author.module';
 
 @Module({
   imports: [
-    UserEntity,
     AuthModule,
+    // PrintingEditionsModule,
+    // AuthorModule,
     TypeOrmModule,
-    PrintingEditionsModule,
-    AuthorModule,
   ],
   controllers: [AccountController],
   providers: [],
