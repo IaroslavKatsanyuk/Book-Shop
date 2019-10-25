@@ -1,6 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import { AuthorInBooksEntity } from './authorInBooks.entity';
+import { AuthorEntity } from './author.entity';
 
-@Entity('PrintingEdition')
+@Entity('printingEdition')
 export class PrintingEditionsEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,4 +27,11 @@ export class PrintingEditionsEntity {
 
   @Column()
   type: string;
+
+
+  @ManyToMany(() => AuthorEntity, ab => ab.id)
+  @JoinTable({
+    name: "AuthorEntity"
+  })
+  authorInBookEntity: AuthorInBooksEntity[];
 }

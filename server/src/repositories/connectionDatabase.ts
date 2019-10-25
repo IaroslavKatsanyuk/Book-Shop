@@ -15,6 +15,6 @@ export const databaseProviders = [
             password: 'Ukraine1990',
             database: 'my-db',
             entities: [UserEntity, PrintingEditionsEntity, AuthorEntity, AuthorInBooksEntity],
-            synchronize: true,
+            synchronize: false,
         }),
     }]

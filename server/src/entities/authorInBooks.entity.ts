@@ -1,8 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinTable, ManyToMany } from 'typeorm';
 import { AuthorEntity } from './author.entity';
 import { PrintingEditionsEntity } from './printingEditions.entity';
+import { type } from 'os';
 
-@Entity('AuthorInBook')
+@Entity('authorInBook')
 export class AuthorInBooksEntity {
   @PrimaryGeneratedColumn()
   authorId: number;
@@ -11,12 +12,5 @@ export class AuthorInBooksEntity {
   printingEditionId: number;
 
   @Column()
-  date: Date;
-
-  @ManyToMany(type => AuthorEntity)
-  @JoinTable()
-  authorEntity: AuthorEntity[];
-  @ManyToMany(type => PrintingEditionsEntity)
-  @JoinTable()
-  printingEditionsEntity: PrintingEditionsEntity[];
+  date: Date;   
 }
