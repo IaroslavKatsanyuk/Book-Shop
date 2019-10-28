@@ -1,6 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
-import { AuthorInBooksEntity } from './authorInBooks.entity';
-import { AuthorEntity } from './author.entity';
 
 @Entity('printingEdition')
 export class PrintingEditionsEntity {
@@ -26,6 +24,5 @@ export class PrintingEditionsEntity {
   currency: string;
 
   @Column()
-  type: string;
-  
+  type: string;  
 }
