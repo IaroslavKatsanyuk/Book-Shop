@@ -13,14 +13,14 @@ export class AccountController {
     private readonly authService: AuthService,
   ) { }
 
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jsonwebtoken'))
   @Get('findAll')
   async findAll(): Promise<UserEntity[]> {
     return this.authService.findAll();
   }
 
   @Post('register')
-  async register(@Body() registerModel: RegisterModel){
+  async register(@Body() registerModel: RegisterModel) {
     return this.authService.register(registerModel);
   }
 
@@ -28,5 +28,10 @@ export class AccountController {
   @Post('login')
   async login(@Body() loginModel: LoginModel) {
     return this.authService.login(loginModel);
+  }
+
+  @Post('refreshtoken')
+  async refreshtoken(@Body() refresh: { refresh_token: string }) {
+    return this.authService.refreshtoken(refresh);
   }
 }
