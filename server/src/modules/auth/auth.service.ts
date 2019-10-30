@@ -2,7 +2,6 @@ import { Injectable, Inject } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserEntity } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
-import * as jwt from 'jsonwebtoken';
 import { sign, verify } from 'jsonwebtoken';
 import { jwtConstants } from 'src/secrets/jwt.constants';
 
@@ -15,10 +14,10 @@ export class AuthService {
 
   async validateRegistuser(registerModel: any): Promise<any> {
     const user = await this.userRepository.findOne({ where: (item: UserEntity) => { item.email === registerModel.email } });
-    if (user != undefined) {
-      return user;
+    if (user != registerModel) {
+      return null;
     }
-    return null;
+    return user;
   }
 
   async register(registerModel: any): Promise<any> {
@@ -82,8 +81,14 @@ export class AuthService {
         if (err) {
           reject(err);
         }
-        this.userRepository.findOne({ email: payload.email }).then(user => { resolve(user); });
-        
+        this.userRepository.findOne({ email: payload.email }).then(user => {
+          const expiration = '60s';
+          const expirationTwo = '6h';
+          resolve({
+            access_token: sign({ email: user.email }, jwtConstants.accessSecret, { expiresIn: expiration }),
+            refresh_token: sign({ email: user.email }, jwtConstants.refreshSecret, { expiresIn: expirationTwo })
+          });
+        });
       });
     })
   }
