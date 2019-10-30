@@ -4,6 +4,9 @@ import { UserEntity } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import { sign, verify } from 'jsonwebtoken';
 import { jwtConstants } from 'src/secrets/jwt.constants';
+import { RegisterModel } from 'src/models/account/register.model';
+import { TokenModel } from 'src/models/account/token.model';
+import { LoginModel } from 'src/models/account/login.model';
 
 @Injectable()
 export class AuthService {
@@ -50,17 +53,26 @@ export class AuthService {
   }
 
   async login(loginModel: any) {
-    const userFromDB = await this.validateLoginUser(loginModel);
+    const userFromDB : UserEntity = await this.validateLoginUser(loginModel);
+
     if (!userFromDB) {
       return null;
     }
+    
     const payload = { email: userFromDB.email, id: userFromDB.id };
     const expiration = '60s';
     const expirationTwo = '6h';
-    return {
-      access_token: sign(payload, jwtConstants.accessSecret, { expiresIn: expiration }),
-      refresh_token: sign(payload, jwtConstants.refreshSecret, { expiresIn: expirationTwo })
-    };
+
+    const tokenModel: TokenModel = new TokenModel();
+
+    tokenModel.accessSecret = sign(payload, jwtConstants.accessSecret, { expiresIn: expiration });
+    tokenModel.refreshSecret = sign(payload, jwtConstants.refreshSecret, { expiresIn: expirationTwo });
+
+    userFromDB.refreshToken = tokenModel.refreshSecret;
+
+    this.userRepository.update(userFromDB);
+
+    return tokenModel;
   }
 
   async passwordsAreEqual(
@@ -76,6 +88,10 @@ export class AuthService {
   }
 
   async refreshtoken(tokenModel: any) {
+    const user = this.userRepository.findOne({ where: (item: UserEntity) => { item.refreshToken === tokenModel.Token } });
+    if (user != tokenModel) {
+      return null
+    }
     return await new Promise((resolve, reject) => {
       verify(tokenModel.Token, jwtConstants.refreshSecret, (err, payload) => {
         if (err) {

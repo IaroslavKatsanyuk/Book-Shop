@@ -1,12 +1,12 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-export class migrations1572263138215 implements MigrationInterface {
+export class migration1572444528576 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         await queryRunner.query("CREATE TABLE `printingEdition` (`id` int NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, `description` varchar(255) NOT NULL, `price` int NOT NULL, `isRemoved` varchar(255) NOT NULL, `status` varchar(255) NOT NULL, `currency` varchar(255) NOT NULL, `type` varchar(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB", undefined);
         await queryRunner.query("CREATE TABLE `author` (`id` int NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB", undefined);
         await queryRunner.query("CREATE TABLE `authorInBook` (`authorId` int NOT NULL AUTO_INCREMENT, `printingEditionId` int NOT NULL, `date` datetime NOT NULL, PRIMARY KEY (`authorId`)) ENGINE=InnoDB", undefined);
-        await queryRunner.query("CREATE TABLE `users` (`id` int NOT NULL AUTO_INCREMENT, `firstName` varchar(255) NOT NULL, `lastName` varchar(255) NOT NULL, `email` varchar(255) NOT NULL, `password` varchar(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB", undefined);
+        await queryRunner.query("CREATE TABLE `users` (`id` int NOT NULL AUTO_INCREMENT, `refreshToken` varchar(255), `firstName` varchar(255) NOT NULL, `lastName` varchar(255) NOT NULL, `email` varchar(255) NOT NULL, `password` varchar(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB", undefined);
         await queryRunner.query("ALTER TABLE `authorInBook` DROP COLUMN `date`", undefined);
         await queryRunner.query("ALTER TABLE `authorInBook` ADD `date` datetime NOT NULL", undefined);
         await queryRunner.query("ALTER TABLE `authorInBook` CHANGE `authorId` `authorId` int NOT NULL", undefined);

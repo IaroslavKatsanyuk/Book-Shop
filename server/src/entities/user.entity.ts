@@ -8,6 +8,9 @@ export class UserEntity {
   id: number;
 
   @Column()
+  refreshToken: string;
+
+  @Column()
   firstName: string;
 
   @Column()
