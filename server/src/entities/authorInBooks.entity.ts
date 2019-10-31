@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, JoinTable, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('authorInBook')
 export class AuthorInBooksEntity {
@@ -9,5 +9,5 @@ export class AuthorInBooksEntity {
   printingEditionId: number;
 
   @Column()
-  date: Date;   
+  date: Date;
 }

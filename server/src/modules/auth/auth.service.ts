@@ -1,12 +1,10 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserEntity } from 'src/entities/user.entity';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { sign, verify } from 'jsonwebtoken';
 import { jwtConstants } from 'src/secrets/jwt.constants';
-import { RegisterModel } from 'src/models/account/register.model';
 import { TokenModel } from 'src/models/account/token.model';
-import { LoginModel } from 'src/models/account/login.model';
 
 @Injectable()
 export class AuthService {
@@ -16,8 +14,8 @@ export class AuthService {
   ) { }
 
   async validateRegistuser(registerModel: any): Promise<any> {
-    const user = await this.userRepository.findOne({ where: (item: UserEntity) => { item.email === registerModel.email } });
-    if (user != registerModel) {
+    const user = await this.userRepository.findOne({ where: { email: registerModel.email } });
+    if (!user) {
       return null;
     }
     return user;
@@ -33,8 +31,7 @@ export class AuthService {
       userToRegister.password = registerModel.password;
       return this.userRepository.insert(userToRegister);
     }
-    return null;
-    6
+    throw new UnauthorizedException("refresh registerUser is invalid");
   }
 
 
@@ -44,7 +41,7 @@ export class AuthService {
   }
 
   async validateLoginUser(loginModel: any): Promise<any> {
-    const user = await this.userRepository.findOne({ where: (item: UserEntity) => { item.email === loginModel.email } });
+    const user = await this.userRepository.findOne({ where: { email: loginModel.email } });
     const paswordIsCorrect: boolean = await this.passwordsAreEqual(user.password, loginModel.password)
     if (user && paswordIsCorrect) {
       return user;
@@ -53,12 +50,12 @@ export class AuthService {
   }
 
   async login(loginModel: any) {
-    const userFromDB : UserEntity = await this.validateLoginUser(loginModel);
+    const userFromDB: UserEntity = await this.validateLoginUser(loginModel);
 
     if (!userFromDB) {
-      return null;
+      throw new UnauthorizedException("refresh user is invalid");
     }
-    
+
     const payload = { email: userFromDB.email, id: userFromDB.id };
     const expiration = '60s';
     const expirationTwo = '6h';
@@ -70,7 +67,8 @@ export class AuthService {
 
     userFromDB.refreshToken = tokenModel.refreshSecret;
 
-    this.userRepository.update(userFromDB);
+    this.userRepository.save(userFromDB);
+    // const result: UpdateResult = await this.userRepository.update({ id: userFromDB.id }, { refreshToken: userFromDB.refreshToken });
 
     return tokenModel;
   }
@@ -87,25 +85,32 @@ export class AuthService {
     }));
   }
 
-  async refreshtoken(tokenModel: any) {
-    const user = this.userRepository.findOne({ where: (item: UserEntity) => { item.refreshToken === tokenModel.Token } });
-    if (user != tokenModel) {
-      return null
+  async validateToken(TokenModel: any): Promise<any> {
+    const token = await this.userRepository.findOne({ where: { refreshToken: TokenModel.Token } });
+    if (!token) {
+      return null;
     }
-    return await new Promise((resolve, reject) => {
-      verify(tokenModel.Token, jwtConstants.refreshSecret, (err, payload) => {
-        if (err) {
-          reject(err);
-        }
-        this.userRepository.findOne({ email: payload.email }).then(user => {
-          const expiration = '60s';
-          const expirationTwo = '6h';
-          resolve({
-            access_token: sign({ email: user.email }, jwtConstants.accessSecret, { expiresIn: expiration }),
-            refresh_token: sign({ email: user.email }, jwtConstants.refreshSecret, { expiresIn: expirationTwo })
-          });
-        });
-      });
-    })
+    return token;
+  }
+
+
+  async refreshtoken(tokenModel: any) {
+    const tokenFromDB: UserEntity = await this.validateToken(tokenModel);
+
+    if (!tokenFromDB) {
+      throw new UnauthorizedException("refresh token is invalid");
+    }
+    const payload = { email: tokenFromDB.email, id: tokenFromDB.id };
+    const expiration = '60s';
+    const expirationTwo = '6h';
+
+    tokenModel.accessSecret = sign(payload, jwtConstants.accessSecret, { expiresIn: expiration });
+    tokenModel.refreshSecret = sign(payload, jwtConstants.refreshSecret, { expiresIn: expirationTwo });
+
+    tokenFromDB.refreshToken = tokenModel.refreshSecret;
+
+    const result: UpdateResult = await this.userRepository.update({ id: tokenFromDB.id }, { refreshToken: tokenFromDB.refreshToken });
+
+    return tokenModel;
   }
 }

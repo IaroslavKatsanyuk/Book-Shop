@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('printingEdition')
 export class PrintingEditionsEntity {
@@ -24,5 +24,5 @@ export class PrintingEditionsEntity {
   currency: string;
 
   @Column()
-  type: string;  
+  type: string;
 }
