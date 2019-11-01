@@ -9,7 +9,6 @@ export class AuthorEntity {
   @Column()
   name: string;
 
-  
   @ManyToMany(() => PrintingEditionsEntity)
   @JoinTable({name :'authorInBook'})
   printingEditionsEntity: PrintingEditionsEntity[];

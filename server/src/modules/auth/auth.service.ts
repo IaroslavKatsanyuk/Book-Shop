@@ -2,7 +2,7 @@ import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserEntity } from 'src/entities/user.entity';
 import { Repository, UpdateResult } from 'typeorm';
-import { sign, verify } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 import { jwtConstants } from 'src/secrets/jwt.constants';
 import { TokenModel } from 'src/models/account/token.model';
 
@@ -68,7 +68,6 @@ export class AuthService {
     userFromDB.refreshToken = tokenModel.refreshSecret;
 
     this.userRepository.save(userFromDB);
-    // const result: UpdateResult = await this.userRepository.update({ id: userFromDB.id }, { refreshToken: userFromDB.refreshToken });
 
     return tokenModel;
   }

@@ -3,7 +3,7 @@ import { PrintingEditionsEntity } from 'src/entities/printingEditions.entity';
 
 export const printingProviders = [
   {
-    provide: 'PrintingRepository',
+    provide: 'printingRepository',
     useFactory: (connection: Connection) => connection.getRepository(PrintingEditionsEntity),
     inject: ['DATABASE_CONNECTION'],
   },

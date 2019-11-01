@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class PrintingEditionsService {
   constructor(
-    @Inject('PrintingRepository')
+    @Inject('printingRepository')
     private readonly printingRepository: Repository<PrintingEditionsEntity>,
   ) { }
 
