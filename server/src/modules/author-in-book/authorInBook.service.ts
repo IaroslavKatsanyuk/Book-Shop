@@ -27,7 +27,6 @@ export class AuthorInBookService {
         const authorInBook: AuthorInBooksEntity = await this.authorInBookValid(AuthorInBookModel);
         const author = await this.authorRepository.findOne({ where: { id: AuthorInBookModel.authorId } });
         const book = await this.printingRepository.findOne({ where: { id: AuthorInBookModel.printingEditionId } });
-        this.authorInBookRepository.save([authorInBook]);
         if (!authorInBook) {
             const newAuthorInBook: AuthorInBooksEntity = new AuthorInBooksEntity;
             newAuthorInBook.authorId = author.id;
@@ -39,17 +38,22 @@ export class AuthorInBookService {
     }
 
 
-    // async searchauthor(AuthorInBookModel: any) {
-    //     const authorInBookRegister: AuthorInBooksEntity = new AuthorInBooksEntity();
-    //     const authorRegister: AuthorEntity = new AuthorEntity();
-    //     const BookRegister: PrintingEditionsEntity = new PrintingEditionsEntity();
-    //     authorInBookRegister.authorId = authorRegister.id = 1;
-    //     authorInBookRegister.printingEditionId = BookRegister.id = 1;
-    //     authorInBookRegister.printingEditionId = BookRegister.id = 2;
-    //     authorInBookRegister.printingEditionId = BookRegister.id = 3;
-    //     authorInBookRegister.authorId = authorRegister.id = 2;
-    //     authorInBookRegister.printingEditionId = BookRegister.id = 4;
-    //     authorInBookRegister.printingEditionId = BookRegister.id = 5;
-    //     authorInBookRegister.date = new Date();
-    //     return this.authorInBookRepository.insert(authorInBookRegister);
-}
+    async bookValid(AllBookModel: any): Promise<any> {
+        const authorBook = await this.authorRepository.findOne({ where: { name: AllBookModel.authorName } });
+        if (authorBook) {
+            return authorBook.id;
+        }
+        return null;
+    }
+
+
+    async allbook(AllBookModel: any) {
+        const authorId: AuthorInBooksEntity = await this.bookValid(AllBookModel);
+        if (!authorId) {
+            return null;
+        }
+        const allBooks = await this.authorInBookRepository.find({ where: { authorEntity: authorId } });
+        const idBook = await this.printingRepository.find({where: {id: allBooks}});
+        return idBook;
+    }
+}   

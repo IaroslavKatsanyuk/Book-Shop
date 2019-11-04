@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AccountController } from './controllers/account.controller';
-import { AuthModule } from './modules/auth/auth.module';
-import { PrintingEditionsModule } from './modules/printing-editions/printingEditions.module';
-import { AuthorModule } from './modules/author/author.module';
-import { AuthorInBookModule } from './modules/author-in-book/authorInBook.modules';
+import { AuthModule } from 'src/modules/auth/auth.module';
+import { PrintingEditionsModule } from 'src/modules/printing-editions/printingEditions.module';
+import { AuthorModule } from 'src/modules/author/author.module';
+import { AuthorInBookModule } from 'src/modules/author-in-book/authorInBook.modules';
+import { AccountController } from 'src/controllers/account.controller';
 
 @Module({
   imports: [   

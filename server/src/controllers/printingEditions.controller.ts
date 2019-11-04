@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body} from '@nestjs/common';
 import { PrintingEditionsModel } from 'src/models/printing-editions/printingEditions.model';
-import { PrintingEditionsService } from '../modules/printing-editions/printingEditions.service';
+import { PrintingEditionsService } from 'src/modules/printing-editions/printingEditions.service';
 
 
 

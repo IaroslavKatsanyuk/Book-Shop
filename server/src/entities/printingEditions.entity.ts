@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinTable } from 'typeorm';
+import { AuthorInBooksEntity } from 'src/entities/authorInBooks.entity';
 
 @Entity('printingEdition')
 export class PrintingEditionsEntity {
@@ -25,4 +26,8 @@ export class PrintingEditionsEntity {
 
   @Column()
   type: string;
+
+  @OneToMany(type => AuthorInBooksEntity, authorInBook => authorInBook.printingEditionsEntity)
+  @JoinTable()
+  authorInBooks: AuthorInBooksEntity[];
 }
