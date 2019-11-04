@@ -16,7 +16,7 @@ export class AuthorInBookService {
     ) { }
 
     async authorInBookValid(AuthorInBookModel: any): Promise<any> {
-        const authorinBook = await this.authorInBookRepository.findOne({ where: { authorId: AuthorInBookModel.id } });
+        const authorinBook = await this.authorInBookRepository.findOne({ where: { authorId: AuthorInBookModel.authorId } });
         if (!authorinBook) {
             return authorinBook;
         }
@@ -29,8 +29,8 @@ export class AuthorInBookService {
         const book = await this.printingRepository.findOne({ where: { id: AuthorInBookModel.printingEditionId } });
         if (!authorInBook) {
             const newAuthorInBook: AuthorInBooksEntity = new AuthorInBooksEntity;
-            newAuthorInBook.authorId = author.id;
-            newAuthorInBook.printingEditionId = book.id;
+            newAuthorInBook.authorEntity = author.id;
+            newAuthorInBook.printingEditionsEntity = book.id;
             newAuthorInBook.date = new Date;
             return this.authorInBookRepository.save(newAuthorInBook);
         }
@@ -55,13 +55,18 @@ export class AuthorInBookService {
         const allBooks = await this.authorInBookRepository.find({ where: { authorEntity: authorId } });
 
 
-        const idBook: PrintingEditionsEntity[] = [];
+        const books = await this.printingRepository.find({ where: { id: allBooks } })
 
-        allBooks.forEach(async element => {
-           let item =  await this.printingRepository.findOne({ where: { id: element.printingEditionId } });
-            idBook.push( item);
-         
-     });
-        return idBook;
+        return books
+
+
+        // const idBook: PrintingEditionsEntity[] = [];
+
+        // allBooks.forEach(async element => {
+        //     let item = await this.printingRepository.find({ where: { id: element.printingEditionsEntity } });
+        //     idBook.push(...item);
+
+        // });
+        // return idBook;
     }
 }   

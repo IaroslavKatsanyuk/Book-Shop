@@ -18,7 +18,6 @@ export class AuthorInBooksEntity {
 
 
   @RelationId((authorInBooks: AuthorInBooksEntity) => authorInBooks.printingEditionsEntity)
-  printingEditionId: number;
 
 
   @ManyToOne(() => AuthorEntity, authorEntity => authorEntity.authorInBooks)
@@ -26,11 +25,10 @@ export class AuthorInBooksEntity {
     name: 'authorId',
     referencedColumnName: 'id',
   })
-  authorEntity: AuthorEntity;
+  authorEntity: number;
 
 
   @RelationId((authorInBooks: AuthorInBooksEntity) => authorInBooks.authorEntity)
-  authorId: number;
 
 
 
