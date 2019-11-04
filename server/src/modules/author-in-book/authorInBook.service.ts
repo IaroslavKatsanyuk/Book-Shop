@@ -53,7 +53,15 @@ export class AuthorInBookService {
             return null;
         }
         const allBooks = await this.authorInBookRepository.find({ where: { authorEntity: authorId } });
-        const idBook = await this.printingRepository.find({where: {id: allBooks}});
+
+
+        const idBook: PrintingEditionsEntity[] = [];
+
+        allBooks.forEach(async element => {
+           let item =  await this.printingRepository.findOne({ where: { id: element.printingEditionId } });
+            idBook.push( item);
+         
+     });
         return idBook;
     }
 }   
