@@ -29,5 +29,5 @@ export class PrintingEditionsEntity {
 
   @OneToMany(type => AuthorInBooksEntity, authorInBook => authorInBook.printingEditionsEntity)
   @JoinTable()
-  authorInBooks: AuthorInBooksEntity[];
+  authorInBooks!: AuthorInBooksEntity[];
 }

@@ -10,5 +10,5 @@ export class AuthorEntity {
 
   @OneToMany(type => AuthorInBooksEntity, authorInBook => authorInBook.authorEntity)
   @JoinTable()
-  authorInBooks: AuthorInBooksEntity[];
+  authorInBooks!: AuthorInBooksEntity[];
 }

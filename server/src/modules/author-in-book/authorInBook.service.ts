@@ -53,20 +53,31 @@ export class AuthorInBookService {
             return null;
         }
         const allBooks = await this.authorInBookRepository.find({ where: { authorEntity: authorId } });
+        
 
+        const book = allBooks.map(function(value){
+            return value.printingEditionId
+        })
+        const booki = await this.printingRepository.find({where: {id: book[0]}})
+        return  booki.map(function(value){
+          return  value.name
+        })
+        // const books = await this.authorInBookRepository.find({ where: { allBooks:  } })
 
-        const books = await this.printingRepository.find({ where: { id: allBooks } })
+        // return books
 
-        return books
-
-
-        // const idBook: PrintingEditionsEntity[] = [];
-
-        // allBooks.forEach(async element => {
-        //     let item = await this.printingRepository.find({ where: { id: element.printingEditionsEntity } });
-        //     idBook.push(...item);
-
+        // allBooks.forEach(function(value){
+        //     return value.printingEditionId
         // });
-        // return idBook;
-    }
+
+
+        // for (var i = 0; i < allBooks.length; i++) {
+        //     var book = allBooks[i].printingEditionId;            
+        //     console.log(book)
+        }
+        // for (var index of allBooks) {          
+        //     var book = index.printingEditionId;
+        //   }
+        //   return book;
+    // }
 }   
