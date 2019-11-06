@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { AuthorInBooksEntity } from 'src/entities/authorInBooks.entity';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { AuthorEntity } from 'src/entities/author.entity';
 import { PrintingEditionsEntity } from 'src/entities/printingEditions.entity';
 
@@ -53,31 +53,14 @@ export class AuthorInBookService {
             return null;
         }
         const allBooks = await this.authorInBookRepository.find({ where: { authorEntity: authorId } });
-        
 
-        const book = allBooks.map(function(value){
+
+        const book = allBooks.map(function (value) {
             return value.printingEditionId
         })
-        const booki = await this.printingRepository.find({where: {id: book[0]}})
-        return  booki.map(function(value){
-          return  value.name
+        const booki = await this.printingRepository.find({ where: { id: In(book) } })
+        return booki.map(function (value) {
+            return value
         })
-        // const books = await this.authorInBookRepository.find({ where: { allBooks:  } })
-
-        // return books
-
-        // allBooks.forEach(function(value){
-        //     return value.printingEditionId
-        // });
-
-
-        // for (var i = 0; i < allBooks.length; i++) {
-        //     var book = allBooks[i].printingEditionId;            
-        //     console.log(book)
-        }
-        // for (var index of allBooks) {          
-        //     var book = index.printingEditionId;
-        //   }
-        //   return book;
-    // }
+    }
 }   
