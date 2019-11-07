@@ -8,6 +8,7 @@
 		}
 	],
 	"settings": {
-		"typescript.tsdk": "server\\node_modules\\typescript\\lib"
+		"typescript.tsdk": "server\\node_modules\\typescript\\lib",
+		"git.ignoreLimitWarning": true
 	}
 }
