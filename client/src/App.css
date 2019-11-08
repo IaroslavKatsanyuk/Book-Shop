@@ -53,29 +53,297 @@
     position: absolute;
     left: 0.88%;
     right: 0.88%;
-    top: 70%;
+    top: 84%;
     font-size: 10px;
     bottom: 0%;
     color: #ffffff;
 }
 
-.LogoTipeOne {}
-
-.LogoTipeTwo {}
-
-.logoTipeThre {}
-
-.LogoName {
+.LogoType {
     position: absolute;
-    left: 0.88%;
-    top: 45%;
+    width: 85px;
+    height: 39px;
+    left: 17px;
+    top: 40px;
 }
 
-.LogoUrl {
-    text-decoration: none;
-    color: #ffffff;
+.LogIn {
+    position: absolute;
+    width: 47px;
+    height: 21px;
+    left: 1651px;
+    top: 45px;
+    font-family: monospace;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 21px;
+    display: flex;
+    align-items: flex-end;
+    letter-spacing: 0.1px;
+    text-decoration-line: underline;
+    text-transform: capitalize;
+    color: #FFFFFF;
 }
 
-div {
-    display: inline-block;
+.ImagelogIn {
+    position: absolute;
+    right: 195px;
+    top: 42px;
+    bottom: 97.22%;
+    opacity: 0.7;
+}
+
+.ShoppingCar {
+    position: absolute;
+    width: 22px;
+    height: 20px;
+    left: 1753px;
+    top: 42px;
+    opacity: 0.7;
+}
+
+.NamePages {
+    position: absolute;
+    width: 1640px;
+    height: 98px;
+    left: 140px;
+    top: 256px;
+    font-family: unset;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 1.5px;
+}
+
+.CurrencyInfo {
+    position: absolute;
+    left: 69.43%;
+    right: 27.14%;
+    top: 11.81%;
+    bottom: 86.76%;
+    font-family: unset;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 30px;
+    color: #FF6825;
+    display: flex;
+}
+
+.Сurrency {
+    position: absolute;
+    left: 73.7%;
+    top: 11.81%;
+    background: #EFEFEF;
+    opacity: 0.51;
+    width: 58px;
+    height: 26px;
+    margin-left: 40px;
+}
+
+.SortInfo {
+    position: absolute;
+    left: 79.53%;
+    right: 17.66%;
+    top: 11.81%;
+    bottom: 86.76%;
+    font-family: unset;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 30px;
+    color: #FF6825;
+    width: 63px;
+}
+
+.Sort {
+    position: absolute;
+    left: 83.18%;
+    right: 7.29%;
+    top: 11.81%;
+    bottom: 86.76%;
+    background: #F7F7F7;
+    opacity: 0.51;
+    width: 135px;
+    height: 26px;
+    margin-left: 20px;
+}
+
+.Filter {
+    position: absolute;
+    left: 7.29%;
+    right: 74.74%;
+    top: 17.25%;
+    bottom: 57.98%;
+    background: #F8F8F8;
+}
+
+.FilterName {
+    position: absolute;
+    left: 9.27%;
+    right: 86.04%;
+    top: 5%;
+    bottom: 79.72%;
+    font-family: unset;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #333333;
+}
+
+.FilterCheckbox {
+    position: absolute;
+    left: 9.27%;
+    right: 84.95%;
+    top: 21.59%;
+    bottom: 74.08%;
+    width: 111px;
+}
+
+.FilterPrice {
+    width: 70px;
+    position: absolute;
+    left: 9.06%;
+    right: 87.71%;
+    top: 45.61%;
+    bottom: 70.32%;
+    font-family: unset;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    color: #333333;
+}
+
+.FilterSumm {
+    position: absolute;
+    left: 9.06%;
+    right: 86.51%;
+    top: 54%;
+    bottom: 68%;
+    width: 270px;
+}
+
+.PriceLow {
+    width: 80px;
+}
+
+.PriceHigh {
+    width: 80px;
+    margin-left: 30px;
+}
+
+.FilterButton {
+    position: absolute;
+    left: 90%;
+    right: 76.5%;
+    top: 30%;
+    bottom: 68%;
+    font-family: unset;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFEFD;
+    background: #333333;
+    height: 23px;
+}
+
+.Dolar {
+    position: absolute;
+    left: 205px;
+    top: 5px;
+    font-family: unset;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 14px;
+}
+
+.Book1 {
+    position: absolute;
+    width: 401px;
+    height: 556px;
+    left: 551px;
+    top: 387px;
+}
+
+.Book1_2 {
+    position: absolute;
+    width: 401px;
+    height: 556px;
+    left: 950px;
+    top: 381px;
+}
+
+.Book1_3 {
+    position: absolute;
+    width: 401px;
+    height: 556px;
+    left: 1288px;
+    top: 387px;
+}
+
+.Book1_4 {
+    position: absolute;
+    width: 401px;
+    height: 556px;
+    left: 554px;
+    top: 953px;
+}
+
+.Book1_5 {
+    position: absolute;
+    width: 401px;
+    height: 556px;
+    left: 942px;
+    top: 923px;
+}
+
+.Book1_6 {
+    position: absolute;
+    width: 401px;
+    height: 556px;
+    left: 1379px;
+    top: 958px;
+}
+
+.Book1_7 {
+    position: absolute;
+    width: 401px;
+    height: 556px;
+    left: 493px;
+    top: 1464px;
+}
+
+.Book1_8 {
+    position: absolute;
+    width: 401px;
+    height: 556px;
+    left: 965px;
+    top: 1531px;
+}
+
+.Book1_9 {
+    position: absolute;
+    width: 401px;
+    height: 556px;
+    left: 1381px;
+    top: 1531px;
 }
