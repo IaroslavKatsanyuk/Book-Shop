@@ -8,7 +8,7 @@ const App: React.FC = () => {
   return (
     <div className="Catalog">
       <div className="TopMenu">
-        <a className="LogoUrl">
+        <a href=" # " className="LogoUrl">
           <div className="Logo">
             <div className="LogoName">
               <img src={Logotype} alt="Books" className="LogoType" />
@@ -16,11 +16,11 @@ const App: React.FC = () => {
             <div className="LogoInfo">All About Literature</div>
           </div>
         </a>
-        <a className="LogInUrl">
+        <a href=" # " className="LogInUrl">
           <div className="LogIn">Log In</div>
           <img src={UserLogin} alt="Log In" className="ImagelogIn" />
         </a>
-        <a className="ShopingCarUrl"><img src={ShoppingCar} alt="Log In" className="ShoppingCar" /></a>
+        <a href=" # " className="ShopingCarUrl"><img src={ShoppingCar} alt="Log In" className="ShoppingCar" /></a>
 
         <div className="Cart"></div>
       </div>
@@ -70,8 +70,8 @@ const App: React.FC = () => {
       <div className="Book1_7">7</div>
       <div className="Book1_8">8</div>
       <div className="Book1_9">9</div>
-    </div>
-  );
+    </div>    
+  ); 
 }
 
 export default App;
